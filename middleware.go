@@ -200,7 +200,7 @@ func (h *jwtAuthHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	if h.verifyAccess != nil {
-		if !h.verifyAccess(r, jwtClaims) {
+		if !h.verifyAccess(reqCtx, jwtClaims) {
 			apiErr := restapi.NewError(h.errorDomain, ErrCodeAuthorizationFailed, ErrMessageAuthorizationFailed)
 			restapi.RespondError(rw, http.StatusForbidden, apiErr, h.logger(reqCtx))
 			return
